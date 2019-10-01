@@ -49,7 +49,10 @@ int main(){
 		while(1){ //메시지 주고받기 무한루프
 			n = read(c_socket, rcvBuffer, sizeof(rcvBuffer));
 			printf("rcvBuffer: %s\n", rcvBuffer);
+			if(strincasecmp(rcvBuffer, "quit", 4) == 0)
+				break;
 			write(c_socket, rcvBuffer, n); //클라이언트에게 buffer의 내용을 전송함
+	
 		}
 		close(c_socket);
 	}
