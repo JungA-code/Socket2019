@@ -13,9 +13,8 @@ int main(){
 	struct sockaddr_in c_addr;
 	int n;
 	char rcvBuffer[BUFSIZE];
-	char sendBuffer[BUFSIZE] = " WHAT YOUR NAME? \n";
-	char sendBuffer2[BUFSIZE] = " HOW OLD ARE YOU? \n";
-	
+	char sendBuffer[BUFSIZE];
+
 
 	c_socket = socket(PF_INET, SOCK_STREAM, 0);
 
@@ -30,29 +29,12 @@ int main(){
 		return -1;
 	}
 
-	int cnt=0;
-	while(cnt<2){
-		
+	
+	while(1){
+			fgets(sendBuffer, sizeof(sendBuffer), stdin);	
 			write(c_socket, sendBuffer, strlen(sendBuffer));
-
-			n = read(c_socket, rcvBuffer, sizeof(rcvBuffer));
-			if(n < 0) {	printf("Buffer1 Read Fail\n"); return -1; }	
-			
-			rcvBuffer[n] = '\0';
-			printf("Server : %s\n", rcvBuffer);
-			cnt += 1;
-		
-			write(c_socket, sendBuffer2, strlen(sendBuffer2));
-		
-			n = read(c_socket, rcvBuffer, sizeof(rcvBuffer));
-			if(n < 0)	{	printf("Buffer2 Read Fail\n"); return -1; }	
-	
-			rcvBuffer[n] = '\0';
-			printf("Server : %s\n", rcvBuffer);
-			cnt += 1;
-			}
-	
+			n = read(c_socket, rcvBuffer, sizeof(rcvBuffer));     
+	}
 	close(c_socket);	
-
 	return 0;
 }
