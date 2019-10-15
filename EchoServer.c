@@ -5,8 +5,8 @@
 
 #define PORT 10000
 
-char buffer[100] = "Hi, I'm server.\n";
-char rcvBuffer[100];
+char buffer[100] = "Hi, I'm server.\n"; // 클라이언트에게 보낼 메시지를 저장
+char rcvBuffer[100]; //클라이언트가 보낸 메시지를 저장
 int main(){
 	int c_socket, s_socket;
 	struct sockaddr_in s_addr, c_addr;
@@ -49,9 +49,18 @@ int main(){
 		while(1){ //메시지 주고받기 무한루프
 			n = read(c_socket, rcvBuffer, sizeof(rcvBuffer));
 			printf("rcvBuffer: %s\n", rcvBuffer);
-			if(strincasecmp(rcvBuffer, "quit", 4) == 0)
+			if(strncasecmp(rcvBuffer, "quit", 4) == 0)
 				break;
-			write(c_socket, rcvBuffer, n); //클라이언트에게 buffer의 내용을 전송함
+			else if (!strncasecmp(rcvBuffer, "안녕하세요", strlen("안녕하세요")))
+				 strcpy(buffer, "안녕하세요 만나서 반가워요");
+			else if (!strncasecmp(rcvBuffer, "이름이 뭐야?", strlen("이름이 뭐야?")))
+				strcpy(buffer, "내 이름은 정아봇이야 ");
+			else if (!strncasecmp(rcvBuffer, "너 몇살이야?", strlen("너 몇살이야?")))
+				strcpy(buffer, "나 22살이야");
+			else 
+				strcpy(buffer, "다시 말씀해주시겠어요 ?");
+
+			write(c_socket, buffer, strlen(buffer)); //클라이언트에게 buffer의 내용을 전송함
 	
 		}
 		close(c_socket);
