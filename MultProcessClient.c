@@ -33,8 +33,8 @@ int main(){
 	while(1){
 			fgets(sendBuffer, sizeof(sendBuffer), stdin);	
 			write(c_socket, sendBuffer, strlen(sendBuffer));
-			n = read(c_socket, rcvBuffer, sizeof(rcvBuffer));  
-			printf("%s",rcvBuffer);       
+			n = read(c_socket, rcvBuffer, sizeof(rcvBuffer)); 
+			printf("%s",rcvBuffer);    
 	}
 	close(c_socket);	
 	return 0;
